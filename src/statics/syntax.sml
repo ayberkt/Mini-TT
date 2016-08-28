@@ -98,11 +98,11 @@ struct
      | NT k         => NT (SND k)
      | _            => raise Fail "snd of non-pair"
 
+  fun inPat x (PVAR y) = x = y
+    | inPat x (PPAIR (p1, p2)) = inPat x p1 orelse inPat x p2
+    | inPat _ PUNIT = false
+
   (*fun getRho (UPVAR (rho, p, v)) x =*)
       (*if inPat x p then patProj p x v else getRho rho x*)
-  (*and inPat x (PVAR y) = x = y*)
-    (*| inPat x (PPAIR p1 p2) = inPat x p1 orelse inPat x p2*)
-    (*| inPat _ PUNIT = false*)
-  (*and patProj*)
 
 end
