@@ -1,4 +1,4 @@
-structure Syntax =
+structure Syntax : SYNTAX =
 struct
   type name = string
 
@@ -64,17 +64,16 @@ struct
     | NTFUN of sclos * neu
   and sclos = SCL of branch * rho
 
-  fun op** (CL (p, e, rho), v) = raise Todo
-    | op** (CLCMP (clos, s), v) = raise Todo
+  fun ** (CL (p, e, rho), v) = raise Todo
+    | ** (CLCMP (clos, s), v) = raise Todo
   infix **
 
-  fun makeClos (p : patt) (e : exp) (r : rho) : clos =
-    CL (p, e, r)
+  fun makeClos p e r = CL (p, e, r)
 
-  fun clCmp (g : clos) (c : name) = CLCMP (g, c)
+  fun clCmp g c = CLCMP (g, c)
 
-  fun get (s : name) (ENV []) = raise EmptyEnv
-    | get (s : name) (ENV ((s1, u)::us)) =
+  fun get s (ENV []) = raise EmptyEnv
+    | get s (ENV ((s1, u)::us)) =
         if s = s1 then u else get s (ENV us)
 
   fun eval x y = raise Todo
@@ -89,14 +88,21 @@ struct
       | (NT k, m) => NT @@ APP (k, m)
       | (_, _) => raise NoApplicationRule
 
-  val vfst : value -> value =
+  val vfst =
     fn PAIR (u1, _) => u1
      | (NT k)       => NT (FST k)
      | _            => raise Fail "fst of non-pair"
 
-  val  vsnd : value -> value =
+  val vsnd =
     fn PAIR (_, u2) => u2
      | NT k         => NT (SND k)
      | _            => raise Fail "snd of non-pair"
+
+  (*fun getRho (UPVAR (rho, p, v)) x =*)
+      (*if inPat x p then patProj p x v else getRho rho x*)
+  (*and inPat x (PVAR y) = x = y*)
+    (*| inPat x (PPAIR p1 p2) = inPat x p1 orelse inPat x p2*)
+    (*| inPat _ PUNIT = false*)
+  (*and patProj*)
 
 end
