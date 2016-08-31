@@ -1,0 +1,20 @@
+local
+in
+local
+   $(SML_LIB)/basis/pervasive.mlb
+   local
+      syntax.sig
+   in
+      signature gs_0 = SYNTAX
+   end
+   local
+      signature SYNTAX = gs_0
+      syntax.sml
+   in
+      structure gs_1 = Syntax
+   end
+in
+   signature SYNTAX = gs_0
+   structure Syntax = gs_1
+end
+end
