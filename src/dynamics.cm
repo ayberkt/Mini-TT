@@ -1,0 +1,6 @@
+Library
+  structure Syntax
+  structure Dynamics
+is
+  syntax.cm
+  dynamics/dynamics.sml
