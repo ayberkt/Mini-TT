@@ -78,4 +78,6 @@ signature SYNTAX = sig
 
   val eval : exp -> rho -> value
 
+  val lRho : rho -> int
+
 end

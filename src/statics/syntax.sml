@@ -131,5 +131,8 @@ struct
       | (NT k, m) => NT @@ APP (k, m)
       | (_, _) => raise NoApplicationRule
 
+  fun lRho RNIL = 0
+    | lRho (UPVAR (rho, _, _)) = lRho rho + 1
+    | lRho (UPDEC (rho, _))    = lRho rho
 
 end
