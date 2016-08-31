@@ -76,4 +76,6 @@ signature SYNTAX = sig
 
   val getRho : rho -> name -> value
 
+  val eval : exp -> rho -> value
+
 end
