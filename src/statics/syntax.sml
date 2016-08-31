@@ -98,11 +98,21 @@ struct
      | NT k         => NT (SND k)
      | _            => raise Fail "snd of non-pair"
 
+  (* Check if a given name `x` occurs in a pattern. *)
   fun inPat x (PVAR y) = x = y
     | inPat x (PPAIR (p1, p2)) = inPat x p1 orelse inPat x p2
     | inPat _ PUNIT = false
 
-  (*fun getRho (UPVAR (rho, p, v)) x =*)
-      (*if inPat x p then patProj p x v else getRho rho x*)
+  fun patProj x y z = raise Todo
+
+  fun getRho (UPVAR (r, p, v)) x =
+        if inPat x p then patProj p x v else getRho r x
+    | getRho (UPDEC (r, DEF (p, _, e))) x =
+        if inPat x p then patProj p x (eval e r) else getRho r x
+    | getRho (UPDEC (r, DREC (p, q, e))) x =
+        if inPat x p
+        then patProj p x @@ eval e @@ UPDEC (r, (DREC (p, q, e)))
+        else getRho r x
+    | getRho RNIL _ = raise Fail "getRho"
 
 end

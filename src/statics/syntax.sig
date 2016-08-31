@@ -74,6 +74,6 @@ signature SYNTAX = sig
 
   val inPat : name -> patt -> bool
 
-  (*val getRho : rho -> name -> val*)
+  val getRho : rho -> name -> value
 
 end
