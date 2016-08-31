@@ -67,17 +67,9 @@ signature SYNTAX = sig
 
   val get : name -> branch -> exp
 
-  val $$ : value * value -> value
-
   val vfst : value -> value
   val vsnd : value -> value
 
   val inPat : name -> patt -> bool
-
-  val getRho : rho -> name -> value
-
-  val eval : exp -> rho -> value
-
-  val lRho : rho -> int
 
 end
