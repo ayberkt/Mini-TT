@@ -1,3 +1,6 @@
-Group is
-  syntax.sig
-  syntax.sml
+Library
+  signature SYNTAX
+  structure Syntax
+is
+  statics/syntax.sig
+  statics/syntax.sml
