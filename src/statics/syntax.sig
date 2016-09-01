@@ -42,7 +42,7 @@ signature SYNTAX = sig
     | ONE
     | FUN of sclos
     | SUM of sclos
-    | NT of neu
+    | NT of neut
   (* Function closures. *)
   and clos =
       CL of patt * exp * rho
@@ -51,12 +51,12 @@ signature SYNTAX = sig
       RNIL
     | UPVAR of rho * patt * value
     | UPDEC of rho * decl
-  and neu =
+  and neut =
       GEN of int
-    | APP of neu * value
-    | FST of neu
-    | SND of neu
-    | NTFUN of sclos * neu
+    | APP of neut * value
+    | FST of neut
+    | SND of neut
+    | NTFUN of sclos * neut
   and sclos = SCL of branch * rho
 
   val ** : clos * value -> value
