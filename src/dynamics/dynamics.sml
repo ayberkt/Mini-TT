@@ -2,11 +2,16 @@ structure Dynamics =
 struct
 
   open Syntax
+  infix 5 **
 
-  fun @@ f x = f x
+  fun @@ (f, x) = f x
   infixr 1 @@
 
-  infix $$
+  exception Todo
+
+  fun patProj x y z = raise Todo
+
+  infix 5 $$
   fun eval e0 rho =
     case e0 of
         ESET               => SET

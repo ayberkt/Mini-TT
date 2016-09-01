@@ -91,7 +91,4 @@ struct
     | inPat x (PPAIR (p1, p2)) = inPat x p1 orelse inPat x p2
     | inPat _ PUNIT = false
 
-  fun patProj x y z = raise Todo
-
-
 end
