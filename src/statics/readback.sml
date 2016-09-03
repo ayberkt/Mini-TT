@@ -2,13 +2,20 @@ structure Readback : READBACK =
 struct
   open NormalForms
   open Syntax
+  infixr 5 **
 
   exception Todo
 
-  fun readbackValue k v0 =
+  fun @@ (f, x) = f x
+  infixr 1 @@
+
+  (* This should probably be in some other module. *)
+  fun genValue (x : int) : value = raise Todo
+
+  fun readbackValue (k : int) (v0 : value) =
     case v0 of
-        LAM f       => NLAM k
-      | PAIR (u, v) => NPAIR (readbackValue k u, readbackValue k v)
+        LAM f         => NLAM (k, readbackValue (k + 1) @@ f ** (genValue k))
+      | (PAIR (u, v)) => NPAIR (readbackValue k u, readbackValue k v)
 
   fun readbackRho x y = raise Todo
 
