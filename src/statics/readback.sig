@@ -4,8 +4,8 @@ local
 in
   signature READBACK =
   sig
-    val readbackValue : int -> value -> nexp
-    val readbackN : int -> neut -> nneut
-    val readbackRho : int -> rho -> nrho
+    val rbValue : int -> value -> nexp
+    val rbNeut : int -> neut -> nneut
+    val rbRho : int -> rho -> nrho
   end
 end
