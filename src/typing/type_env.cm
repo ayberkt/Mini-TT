@@ -1,4 +1,7 @@
 Group is
+  $/smlnj-lib.cm
+  $/basis.cm
   ../syntax.cm
   ../base/result.cm
   type_env.sig
+  type_env.sml
