@@ -1,8 +1,9 @@
 local
   open Syntax
   open Result
+  open TypeEnv
 in
-  signature Typechecker =
+  signature TYPECHECKER =
   sig
     val checkT : int -> rho -> gamma -> exp  -> unit result
     val check  : int -> rho -> gamma -> exp  -> value -> unit result
