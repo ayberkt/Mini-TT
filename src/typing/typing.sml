@@ -9,5 +9,6 @@ struct
 
   fun checkI k rho gma e0 = raise Todo
 
+  (* `d` is a correct declaration and extends gma to gma' *)
   fun checkD k rho gma d = raise Todo
 end
