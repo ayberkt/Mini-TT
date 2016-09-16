@@ -2,18 +2,17 @@ structure S = Syntax
 
 signature MONAD =
 sig
-  type 'a t
+  type 'a result
 
-  val >>= : ('a t * ('a -> 'b t)) -> 'b t
+  val >>= : ('a result * ('a -> 'b result)) -> 'b result
 
-  val return : 'a -> 'a t
-  val fail   : S.name -> 'a t
+  val return : 'a -> 'a result
+  val fail   : S.name -> 'a result
 end
 
 structure Result : MONAD =
 struct
   datatype 'a result = SUCCESS of 'a | FAIL of S.name
-  type 'a t = 'a result
 
   fun >>= (SUCCESS x, k) = k x
     | >>= (FAIL s, _) = FAIL s
@@ -36,8 +35,9 @@ local
   infix 5 **
   open Context
   open Syntax
-  type gamma = S.value map
 in
+  type gamma = S.value map
+
   fun lookupG s gma = lookup (gma, s)
 
   fun upG gma PUNIT _ _ = return gma
