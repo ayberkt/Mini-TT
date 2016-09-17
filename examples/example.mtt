@@ -1,0 +1,5 @@
+id : Π A:U. A → A = λA. λx. x
+
+Bool : U = Sum (true | false)
+
+rec Nat : U = Sum (zero | succ Nat)
