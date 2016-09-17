@@ -1,5 +1,8 @@
 Group is
   ../syntax.cm
   ../base/result.cm
+  ../dynamics.cm
+  ../statics/readback.cm
   type_env.cm
   typing.sig
+  typing.sml

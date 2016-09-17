@@ -11,10 +11,10 @@ struct
   exception NoApplicationRule
 
   datatype exp =
-      ELAM of patt * exp
-    | ESET
-    | EPI of patt * exp * exp
-    | ESIGMA of patt * exp * exp
+      ELAM of patt * exp (* Lambda expression *)
+    | ESET (* The set type i.e. universe *)
+    | EPI of patt * exp * exp    (* Π type *)
+    | ESIGMA of patt * exp * exp (* Σ type *)
     | EONE
     | EUNIT
     | EPAIR of exp * exp
