@@ -41,9 +41,10 @@ struct
     fn DEF (p, e1, e2) =>
       let
         val e1_type = validType k rho gma e1
+        val t = eval e1 rho
       in
-        case checkI k rho gma e2 of
-          SOME t => upG gma p (eval e2 rho) (genValue k)
+        case check k rho gma e2 t of
+          SOME t => upG gma p t (genValue k)
         | NONE => NONE
       end
      | DREC (p, e1, e2) =>
