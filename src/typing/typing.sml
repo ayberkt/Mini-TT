@@ -2,16 +2,12 @@ structure Typechecker : TYPECHECKER =
 struct
   open TypeEnv
   open Syntax
-  open Result
   infixr 2 >>=
   open Dynamics
   open Readback
   exception Todo
 
   exception TypeError of string
-
-  val success = return ()
-  val succeed = fn _ => success
 
   fun check k rho gma e0 t0 = raise Todo
 
@@ -41,5 +37,20 @@ struct
   fun checkI k rho gma e0 = raise Todo
 
   (* `d` is a correct declaration and extends gma to gma' *)
-  fun checkD k rho gma d = raise Todo
+  fun checkD k rho gma =
+    fn DEF (p, e1, e2) =>
+      let
+        val e1_type = validType k rho gma e1
+      in
+        case checkI k rho gma e2 of
+          SOME t => upG gma p (eval e2 rho) (genValue k)
+        | NONE => NONE
+      end
+     | DREC (p, e1, e2) =>
+        let
+          val e1_type = validType k rho gma e1
+        in
+          raise Todo
+        end
+
 end
