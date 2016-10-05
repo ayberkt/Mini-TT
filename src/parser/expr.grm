@@ -21,6 +21,8 @@ exception Parse of string
     | ZERO
     | ONE
     | TWO
+    | UNDERSCORE
+    | TIMES
 
 %nonterm start of S.decl
        | decl  of S.decl
@@ -40,7 +42,7 @@ exception Parse of string
 %nonassoc REC
 %right ARROW
 %nonassoc LAMBDA SIGMA PI
-%nonassoc COMMA ZERO ONE TWO
+%nonassoc COMMA ZERO ONE TWO TIMES
 %%
 
 start : decl                                                              (decl)
@@ -56,3 +58,9 @@ exp : LAMBDA patt DOT exp                                   (S.ELAM (patt, exp))
     | exp DOT ONE                                                   (S.EFST exp)
     | exp DOT TWO                                                   (S.ESND exp)
     | SIGMA patt COLON exp DOT exp                 (S.ESIGMA (patt, exp1, exp2))
+    | exp ARROW exp                                (S.EPI (S.PUNIT, exp1, exp2))
+    | exp TIMES exp                             (S.ESIGMA (S.PUNIT, exp1, exp2))
+
+patt : IDENT                                                      (S.PVAR IDENT)
+     | patt COMMA patt                                  (S.PPAIR (patt1, patt2))
+     | UNDERSCORE                                                      (S.PUNIT)

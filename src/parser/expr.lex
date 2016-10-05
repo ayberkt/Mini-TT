@@ -43,4 +43,6 @@ ws = [\ \t];
 "0"      => (Tokens.ZERO(!pos, !pos));
 "1"      => (Tokens.ONE(!pos, !pos));
 "2"      => (Tokens.TWO(!pos, !pos));
+"_"      => (Tokens.UNDERSCORE(!pos, !pos));
+"×"      => (Tokens.TIMES(!pos, !pos));
 {alpha}{any}* => (Tokens.IDENT(yytext, !pos, !pos));
