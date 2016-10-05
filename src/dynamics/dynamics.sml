@@ -4,7 +4,6 @@ struct
   local
     open Syntax
     infix 5 **
-    infix 2 $$
 
     fun @@ (f, x) = f x
     infixr 1 @@
@@ -41,8 +40,8 @@ struct
         | EFST e             => vfst @@ eval e rho
         | ESND e             => vsnd @@ eval e rho
         | EVAR x             => getRho rho x
-        | ESUM cas           => SUM @@ SCL (cas, rho)
-        | EFUN ces           => FUN @@ SCL (ces, rho)
+        | ESUM cas           => SUM (cas, rho)
+        | EFUN ces           => FUN (ces, rho)
         | _                  => raise Fail "Something went wrong in eval!"
     and getRho (UPVAR (rho, p, v)) x =
           if inPat x p then patProj p x v else getRho rho x
@@ -56,9 +55,9 @@ struct
     and op$$ ((v1, v2) : value * value) : value =
       case (v1, v2) of
           (LAM f, v) => f ** v
-        | (FUN (SCL (ces, rho)), CON (c, v)) =>
+        | (FUN (ces, rho), CON (c, v)) =>
             (eval (get c ces) rho) $$ v
-        | (FUN (SCL s), NT k) => NT @@ NTFUN (SCL s, k)
+        | (FUN s, NT k) => NT @@ NTFUN (s, k)
         | (NT k, m) => NT @@ APP (k, m)
         | (_, _) => raise NoApplicationRule
 

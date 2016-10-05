@@ -57,7 +57,7 @@ signature SYNTAX = sig
     | FST of neut
     | SND of neut
     | NTFUN of sclos * neut
-  and sclos = SCL of branch * rho
+  withtype sclos = branch * rho
 
   val ** : clos * value -> value
 

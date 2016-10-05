@@ -18,7 +18,7 @@ struct
 
   type gamma = S.value map
 
-  fun lookupG s gma = lookup (gma, s)
+  fun lookupG s gma = find (gma, s)
 
   (*fun upG gma PUNIT _ _ = return gma*)
     (*| upG gma (PVAR x) t _ = return (Context.insert (gma, x, t))*)

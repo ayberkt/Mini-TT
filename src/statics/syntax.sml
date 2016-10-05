@@ -62,7 +62,7 @@ struct
     | FST of neut
     | SND of neut
     | NTFUN of sclos * neut
-  and sclos = SCL of branch * rho
+  withtype sclos = branch * rho
 
   fun ** (CL (p, e, rho), v) = raise Todo
     | ** (CLCMP (clos, s), v) = raise Todo

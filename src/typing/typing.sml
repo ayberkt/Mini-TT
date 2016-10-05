@@ -34,7 +34,17 @@ struct
         end
     | validType k rho gma e = check k rho gma e ESET
 
-  fun checkI k rho gma e0 = raise Todo
+  local
+    fun extPiG (PI (t, g)) = (t, g)
+      | extPiG u = raise Fail "problem in extPiG"
+    fun extSigmaG (SIGMA (t, g)) = (t, g)
+      | extSigmaG u = raise Fail ("problem in extSigG")
+  in
+    fun checkI k rho gma e0 =
+      case e0 of
+        EVAR x => lookupG x gma
+      | EAPP (e1, e2) => raise Todo
+  end
 
   (* `d` is a correct declaration and extends gma to gma' *)
   fun checkD k rho gma =
