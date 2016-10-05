@@ -25,6 +25,6 @@ struct
     NRNIL
   | NUPVAR of nrho * Syn.patt * nexp
   | NUPDEC of nrho * Syn.decl
-  and nsclos = NSCL of Syn.branch * nrho
+  withtype nsclos = Syn.branch * nrho
 
 end

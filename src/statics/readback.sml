@@ -26,8 +26,8 @@ struct
     | ONE  => NONE
     | PI (t, g) => NPI (rbValue k t, k, rbValue (k+1) @@ g ** genValue k)
     | SIGMA (t, g) => NSIGMA (rbValue k t, k, rbValue (k+1) @@ g ** genValue k)
-    | FUN (SCL (s, rho)) => NFUN @@ NSCL @@ meet s (rbRho k rho)
-    | SUM (SCL (s, rho)) => NSUM @@ NSCL @@ meet s (rbRho k rho)
+    | FUN (SCL (s, rho)) => NFUN @@ (s, (rbRho k rho))
+    | SUM (SCL (s, rho)) => NSUM @@ (s, (rbRho k rho))
     | _                 => raise Todo
   and rbNeut i k0 =
     case k0 of
@@ -35,7 +35,7 @@ struct
     | APP (k, m)               => NAPP @@ meet (rbNeut i k) (rbValue i m)
     | FST k                    => NFST (rbNeut i k)
     | SND k                    => NSND (rbNeut i k)
-    | NTFUN (SCL (s, rho), k)  => NNTFUN (NSCL (s, rbRho i rho), rbNeut i k)
+    | NTFUN (SCL (s, rho), k)  => NNTFUN ((s, rbRho i rho), rbNeut i k)
   and rbRho _ RNIL = NRNIL
     | rbRho i (UPVAR (rho, p, v)) = NUPVAR @@ (rbRho i rho, p, rbValue i v)
     | rbRho i (UPDEC (rho, d))    = NUPDEC @@ meet (rbRho i rho) d
