@@ -4,6 +4,5 @@ Group is
   ../syntax.cm
   expr.lex
   expr.grm
-  parser/expr_lexer.sml
-  parser/expr_parser.sml
-
+  lexer.sml
+  parser.sml

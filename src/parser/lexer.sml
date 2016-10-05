@@ -1,5 +1,5 @@
 structure ExpLrVals =
   ExpLrValsFun(structure Token = LrParser.Token)
 
-structure ExpLex =
+structure Lexer =
   ExpLexFun(structure Tokens = ExpLrVals.Tokens)

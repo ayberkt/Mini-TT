@@ -18,6 +18,7 @@ exception Parse of string
     | RPAREN
     | ARROW
     | COMMA
+    | ZERO
     | ONE
     | TWO
 
@@ -33,6 +34,13 @@ exception Parse of string
 %eop EOF
 %noshift EOF
 %name Exp
+%nonassoc COLON
+%nonassoc EQUAL
+%nonassoc DOT
+%nonassoc REC
+%right ARROW
+%nonassoc LAMBDA SIGMA PI
+%nonassoc COMMA ZERO ONE TWO
 %%
 
 start : decl                                                              (decl)
@@ -41,7 +49,7 @@ decl : patt COLON exp EQUAL exp                       (S.DEF (patt, exp1, exp2))
      | REC patt COLON exp EQUAL exp                  (S.DREC (patt, exp1, exp2))
 
 exp : LAMBDA patt DOT exp                                   (S.ELAM (patt, exp))
-    | var                                                           (S.EVAR var)
+    | IDENT                                                       (S.EVAR IDENT)
     | exp exp                                              (S.EAPP (exp1, exp2))
     | PI patt COLON exp DOT exp                       (S.EPI (patt, exp1, exp2))
     | exp COMMA exp                                       (S.EPAIR (exp1, exp2))
