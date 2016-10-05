@@ -23,6 +23,7 @@ exception Parse of string
     | TWO
     | UNDERSCORE
     | TIMES
+    | FUN
 
 %nonterm start of S.decl
        | decl  of S.decl

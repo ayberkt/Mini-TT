@@ -45,4 +45,5 @@ ws = [\ \t];
 "2"      => (Tokens.TWO(!pos, !pos));
 "_"      => (Tokens.UNDERSCORE(!pos, !pos));
 "×"      => (Tokens.TIMES(!pos, !pos));
+"fun"    => (Tokens.TIMES(!pos, !pos));
 {alpha}{any}* => (Tokens.IDENT(yytext, !pos, !pos));
