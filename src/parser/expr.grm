@@ -1,0 +1,67 @@
+structure S = Syntax
+exception Parse of string
+
+%%
+%header (functor ExpLrValsFun (structure Token : TOKEN))
+
+%term EOF
+    | IDENT of string
+    | LAMBDA
+    | PI
+    | SIGMA
+    | BAR
+    | DOT
+    | COLON
+    | REC
+    | EQUAL
+    | LPAREN
+    | RPAREN
+    | ARROW
+    | COMMA
+    | ZERO
+    | ONE
+    | TWO
+    | UNDERSCORE
+    | TIMES
+    | FUN
+
+%nonterm start of S.decl
+       | decl  of S.decl
+       | exp   of S.exp
+       | patt  of S.patt
+       | var   of S.exp
+
+%verbose
+%pos int
+%start start
+%eop EOF
+%noshift EOF
+%name Exp
+%nonassoc COLON
+%nonassoc EQUAL
+%nonassoc DOT
+%nonassoc REC
+%right ARROW
+%nonassoc LAMBDA SIGMA PI
+%nonassoc COMMA ZERO ONE TWO TIMES
+%%
+
+start : decl                                                              (decl)
+
+decl : patt COLON exp EQUAL exp                       (S.DEF (patt, exp1, exp2))
+     | REC patt COLON exp EQUAL exp                  (S.DREC (patt, exp1, exp2))
+
+exp : LAMBDA patt DOT exp                                   (S.ELAM (patt, exp))
+    | IDENT                                                       (S.EVAR IDENT)
+    | exp exp                                              (S.EAPP (exp1, exp2))
+    | PI patt COLON exp DOT exp                       (S.EPI (patt, exp1, exp2))
+    | exp COMMA exp                                       (S.EPAIR (exp1, exp2))
+    | exp DOT ONE                                                   (S.EFST exp)
+    | exp DOT TWO                                                   (S.ESND exp)
+    | SIGMA patt COLON exp DOT exp                 (S.ESIGMA (patt, exp1, exp2))
+    | exp ARROW exp                                (S.EPI (S.PUNIT, exp1, exp2))
+    | exp TIMES exp                             (S.ESIGMA (S.PUNIT, exp1, exp2))
+
+patt : IDENT                                                      (S.PVAR IDENT)
+     | patt COMMA patt                                  (S.PPAIR (patt1, patt2))
+     | UNDERSCORE                                                      (S.PUNIT)
